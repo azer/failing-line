@@ -1,6 +1,6 @@
 ## failing-line
 
-Return the line number and filename of failing line from given error object
+Return the line and column number, filename and function name from the failing line from given error object.
 
 ## Install
 
@@ -15,7 +15,7 @@ var failingLine = require('failing-line')
 
 process.on('uncaughtException', function (error) {
   failingLine(error)
-  // => { lineno: 8, filename: 'example.js' }
+  // => { line: 8, col: 0, function: 'Object.<anonymous>' filename: 'example.js' }
 })
 
 hereIfail++
