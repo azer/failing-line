@@ -20,8 +20,5 @@
     "type": "git"
   },
   "author": "azer",
-  "license": "BSD",
-  "dependencies": {
-    "findall": "0.0.4"
-  }
+  "license": "BSD"
 }

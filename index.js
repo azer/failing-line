@@ -1,15 +1,33 @@
-var find = require("findall");
-
 module.exports = failingLine;
 
 function failingLine (error, shift) {
-  var match = find(error.stack, /\(([^\(\)]+)\)/g);
-  if (!match) return undefined;
+  if (!error || !error.stack) return;
 
-  match = match[0 + (shift || 0)].split(':');
+  var index = 1;
+  if (shift) index += shift;
+
+  var fn, filename, line, col;
+  var stack = error.stack.split('\n')[index];
+  var match = stack.match(/at ([\w\.<>\[\]\s]+) \(([^:]+):(\d+):(\d+)/);
+
+  if (!match) {
+    match = stack.match(/at ([^:]+):(\d+):(\d+)/);
+    if (!match) return undefined;
+
+    filename = match[1];
+    line = Number(match[2]);
+    col = Number(match[3]);
+  } else {
+    fn = match[1];
+    filename = match[2];
+    line = Number(match[3]);
+    col = Number(match[4]);
+  }
 
   return {
-    filename: match[0],
-    lineno: Number(match[1])
+    fn: fn,
+    filename: filename,
+    line: line,
+    col: col
   };
 }
