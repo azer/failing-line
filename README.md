@@ -20,3 +20,12 @@ process.on('uncaughtException', function (error) {
 
 hereIfail++
 ```
+
+If the top line(s) in the stack should be skipped in your case,
+pass an extra parameter:
+
+```js
+failingLine(error, 1) // will start reading stack from second line
+```
+
+Check out `test.js` for more info.

@@ -1,10 +1,12 @@
+var find = require("findall");
+
 module.exports = failingLine;
 
-function failingLine (error) {
-  var match = error.stack.match(/\(([^\(\)]+)\)/);
+function failingLine (error, shift) {
+  var match = find(error.stack, /\(([^\(\)]+)\)/g);
   if (!match) return undefined;
 
-  match = match[1].split(':');
+  match = match[0 + (shift || 0)].split(':');
 
   return {
     filename: match[0],

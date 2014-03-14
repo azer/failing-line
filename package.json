@@ -16,9 +16,12 @@
     "line number"
   ],
   "repository": {
-    "url": "git@github.com:azer\/failing-line.git",
+    "url": "git@github.com:azer/failing-line.git",
     "type": "git"
   },
   "author": "azer",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "findall": "0.0.4"
+  }
 }
