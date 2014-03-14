@@ -8,7 +8,7 @@ function failingLine (error, shift) {
 
   var fn, filename, line, col;
   var stack = error.stack.split('\n')[index];
-  var match = stack.match(/at ([\w\.<>\[\]\s]+) \(([^:]+):(\d+):(\d+)/);
+  var match = stack.match(/at ([\(\)\w\.<>\[\]\s]+) \(([^:]+):(\d+):(\d+)/);
 
   if (!match) {
     match = stack.match(/at ([^:]+):(\d+):(\d+)/);

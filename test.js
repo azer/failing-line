@@ -36,7 +36,17 @@ test('stack with no filenames', function (assert) {
   assert.equal(ln.filename, 'repl');
   assert.equal(ln.line, 1);
   assert.equal(ln.col, 17);
+});
 
+test('function names with paranthesis', function (assert) {
+  var err = { stack: tapeStack.join('\n') };
+  var ln = failingLine(err, 2);
+
+  assert.plan(4);
+  assert.equal(ln.fn, 'Expect.(anonymous function) [as equal]');
+  assert.equal(ln.filename, '/Users/azer/dev/prova/lib/expect.js');
+  assert.equal(ln.line, 39);
+  assert.equal(ln.col, 29);
 });
 
 var replStack = ["Error: fooo",
@@ -50,3 +60,9 @@ var replStack = ["Error: fooo",
   "    at ReadStream.onkeypress (readline.js:99:10)",
   "    at ReadStream.EventEmitter.emit (events.js:98:17)",
   "    at emitKey (readline.js:1095:12)"];
+
+var tapeStack = ["Error: should be equal",
+                 "    at Test.assert [as _assert] (/Users/azer/dev/prova/node_modules/tape/lib/test.js:178:54)",
+                 "    at Test.equal.Test.equals.Test.isEqual.Test.is.Test.strictEqual.Test.strictEquals (/Users/azer/dev/prova/node_modules/tape/lib/test.js:301:10)",
+                 "    at Expect.(anonymous function) [as equal] (/Users/azer/dev/prova/lib/expect.js:39:29)",
+                 "    at null._onTimeout (/Users/azer/dev/prova/example.js:10:32)","    at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)"];
