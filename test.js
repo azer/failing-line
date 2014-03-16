@@ -49,6 +49,18 @@ test('function names with paranthesis', function (assert) {
   assert.equal(ln.col, 29);
 });
 
+test('stack lines with only urls and line/column numbers', function (assert) {
+  var err = { stack: browserStack.join('\n') };
+  var ln = failingLine(err, 3);
+
+  assert.plan(4);
+  assert.notOk(ln.fn);
+  assert.equal(ln.filename, 'http://localhost:7559/assets/run.js');
+  assert.equal(ln.line, 11);
+  assert.equal(ln.col, 10);
+});
+
+
 var replStack = ["Error: fooo",
   "    at repl:1:17",
   "    at REPLServer.self.eval (repl.js:110:21)",
@@ -66,3 +78,15 @@ var tapeStack = ["Error: should be equal",
                  "    at Test.equal.Test.equals.Test.isEqual.Test.is.Test.strictEqual.Test.strictEquals (/Users/azer/dev/prova/node_modules/tape/lib/test.js:301:10)",
                  "    at Expect.(anonymous function) [as equal] (/Users/azer/dev/prova/lib/expect.js:39:29)",
                  "    at null._onTimeout (/Users/azer/dev/prova/example.js:10:32)","    at Timer.listOnTimeout [as ontimeout] (timers.js:110:15)"];
+
+var browserStack = [
+  "Error: should be equal",
+  "    at Test.assert [as _assert] (http://localhost:7559/assets/run.js:5564:54)",
+  "    at Test.equal.Test.equals.Test.isEqual.Test.is.Test.strictEqual.Test.strictEquals (http://localhost:7559/assets/run.js:5687:10)",
+  "    at Function.expect.(anonymous function) (http://localhost:7559/assets/run.js:175:19)",
+  "    at http://localhost:7559/assets/run.js:11:10",
+  "    at Test.call [as _cb] (http://localhost:7559/assets/run.js:46:12)",
+  "    at Test.run (http://localhost:7559/assets/run.js:5442:14)",
+  "    at next (http://localhost:7559/assets/run.js:5259:15)",
+  "    at http://localhost:7559/assets/run.js:1902:21"
+];

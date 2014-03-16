@@ -1,6 +1,6 @@
-module.exports = failingLine;
+module.exports = v8;
 
-function failingLine (error, shift) {
+function v8 (error, shift) {
   if (!error || !error.stack) return;
 
   var index = 1;
@@ -11,7 +11,7 @@ function failingLine (error, shift) {
   var match = stack.match(/at ([\(\)\w\.<>\[\]\s]+) \((.+):(\d+):(\d+)/);
 
   if (!match) {
-    match = stack.match(/at ([^:]+):(\d+):(\d+)/);
+    match = stack.match(/at (.+):(\d+):(\d+)/);
     if (!match) return undefined;
 
     filename = match[1];
