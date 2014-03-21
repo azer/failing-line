@@ -1,6 +1,6 @@
 {
   "name": "failing-line",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Return the line number and filename of failing line from given error object",
   "main": "index.js",
   "scripts": {
