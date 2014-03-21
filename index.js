@@ -8,6 +8,9 @@ function v8 (error, shift) {
 
   var fn, filename, line, col;
   var stack = error.stack.split('\n')[index];
+
+  if (!stack) return;
+
   var match = stack.match(/at ([\(\)\w\.<>\[\]\s]+) \((.+):(\d+):(\d+)/);
 
   if (!match) {
