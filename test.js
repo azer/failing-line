@@ -60,6 +60,16 @@ test('stack lines with only urls and line/column numbers', function (assert) {
   assert.equal(ln.col, 10);
 });
 
+test('reading a stack raised in /tmp dir', function (assert) {
+  var err = { stack: tmpStack.join('\n') };
+  var ln = failingLine(err, 3);
+
+  assert.plan(4);
+  assert.equal(ln.fn, 'Test._cb');
+  assert.equal(ln.filename, '/private/tmp/foo.js');
+  assert.equal(ln.line, 4);
+  assert.equal(ln.col, 7);
+});
 
 var replStack = ["Error: fooo",
   "    at repl:1:17",
@@ -90,3 +100,7 @@ var browserStack = [
   "    at next (http://localhost:7559/assets/run.js:5259:15)",
   "    at http://localhost:7559/assets/run.js:1902:21"
 ];
+
+var tmpStack = ["Error: addition!",
+                "    at Test._cb (/private/tmp/foo.js:4:7)",
+                "    at processImmediate [as _immediateCallback] (timers.js:330:15)"];

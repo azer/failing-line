@@ -7,7 +7,8 @@ function v8 (error, shift) {
   if (shift) index += shift;
 
   var fn, filename, line, col;
-  var stack = error.stack.split('\n')[index];
+  var lines = error.stack.split('\n');
+  var stack = lines[index] || lines[1];
 
   if (!stack) return;
 
