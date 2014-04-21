@@ -71,6 +71,35 @@ test('reading a stack raised in /tmp dir', function (assert) {
   assert.equal(ln.col, 7);
 });
 
+test('reading safari stack', function (assert) {
+  var err = { stack: safariStack.join('\n') };
+  var ln = failingLine(err, 1);
+
+  assert.plan(4);
+  assert.equal(ln.fn, 'go');
+  assert.equal(ln.filename, 'http://localhost/sandbox/error.js');
+  assert.equal(ln.line, 19);
+  assert.equal(ln.col, 6);
+});
+
+test('reading firefox stack', function (assert) {
+  var err = { stack: firefoxStack.join('\n'), columnNumber: 2 };
+  var ln = failingLine(err, 1);
+
+  assert.plan(8);
+  assert.equal(ln.fn, 'go');
+  assert.equal(ln.filename, 'http://localhost/sandbox/error.js');
+  assert.equal(ln.line, 19);
+  assert.notOk(ln.col);
+
+
+  ln = failingLine(err);
+  assert.equal(ln.fn, 'now');
+  assert.equal(ln.filename, 'http://localhost/sandbox/error.js');
+  assert.equal(ln.line, 23);
+  assert.equal(ln.col, 2);
+});
+
 var replStack = ["Error: fooo",
   "    at repl:1:17",
   "    at REPLServer.self.eval (repl.js:110:21)",
@@ -104,3 +133,19 @@ var browserStack = [
 var tmpStack = ["Error: addition!",
                 "    at Test._cb (/private/tmp/foo.js:4:7)",
                 "    at processImmediate [as _immediateCallback] (timers.js:330:15)"];
+
+var safariStack = [
+  "now@http://localhost/sandbox/error.js:23:4",
+  "go@http://localhost/sandbox/error.js:19:6",
+  "yeah@http://localhost/sandbox/error.js:15:5",
+  "fail@http://localhost/sandbox/error.js:11:7",
+  "global code@http://localhost/sandbox/error.js:5:7"
+];
+
+var firefoxStack = [
+  'now@http://localhost/sandbox/error.js:23',
+  'go@http://localhost/sandbox/error.js:19',
+  'yeah@http://localhost/sandbox/error.js:15',
+  'fail@http://localhost/sandbox/error.js:11',
+  '@http://localhost/sandbox/error.js:5'
+];
